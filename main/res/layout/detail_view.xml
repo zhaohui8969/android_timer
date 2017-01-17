@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:touchscreenBlocksFocus="false">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="15"
+        android:id="@+id/layout_detail_view">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="txt_start_time"
+            android:id="@+id/txt_start_time"
+            android:layout_gravity="center"
+            android:textSize="@dimen/widget_detail_view_h1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="txt_left_time"
+            android:id="@+id/txt_left_time"
+            android:layout_gravity="center"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="txt_end_time"
+            android:id="@+id/txt_end_time"
+            android:layout_gravity="center"
+            android:textSize="@dimen/widget_detail_view_h1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="标题"
+            android:id="@+id/txt_title"
+            android:layout_marginTop="20dp"
+            android:textSize="@dimen/widget_detail_view_h2"
+            android:textColor="@android:color/background_light"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="内容"
+            android:id="@+id/txt_content"
+            android:layout_marginTop="20dp"
+            android:textSize="@dimen/widget_detail_view_h2"
+            android:textColor="@android:color/background_light"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="修改"
+        android:id="@+id/btn_detail_configure"
+        android:layout_weight="1"
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"/>
+
+</LinearLayout>
