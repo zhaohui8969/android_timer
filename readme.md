@@ -34,6 +34,6 @@
 
 # 用法
 
-从Github的release页面下载编译好的APK文件，直接安装，忽略那个安装之后在显示的应用图标吧（没啥用），向桌面小部件，小部件列表里有一个Week_timer，添加到桌面进入倒计时配置页面，Done。
+从Github的[release](https://github.com/zhaohui8969/android_timer/releases)页面下载编译好的APK文件，直接安装，忽略那个安装之后在显示的应用图标吧（没啥用），向桌面小部件，小部件列表里有一个Week_timer，添加到桌面进入倒计时配置页面，Done。
 
 ![](doc/Screenshot_20170118-135727.png)
