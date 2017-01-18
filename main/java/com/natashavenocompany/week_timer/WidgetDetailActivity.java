@@ -18,6 +18,8 @@ import org.json.JSONObject;
 /**
  * Created by natas on 16/12/15.
  */
+
+// 详情页面
 public class WidgetDetailActivity extends Activity {
     TextView txt_start_time;
     TextView txt_left_time;

@@ -23,6 +23,7 @@ import java.util.Date;
  * Created by natas on 16/12/14.
  */
 
+// 小部件详细设置界面
 public class ConfigureActivity extends AppCompatActivity {
 
     Date start_date;
@@ -105,6 +106,7 @@ public class ConfigureActivity extends AppCompatActivity {
         bool_show_title = (CheckBox) findViewById(R.id.bool_show_title);
         btn_ok = (Button) findViewById(R.id.btn_ok);
 
+        // 从Intent中获取到当前配置的小部件ID
         final Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         final Intent resultValue = new Intent();
@@ -172,7 +174,7 @@ public class ConfigureActivity extends AppCompatActivity {
                 // 关闭配置页面
                 finish();
 
-                // 延迟发送更新广播
+                // 延迟发送更新广播，目的是回到桌面后更新小部件视图
                 new Thread() {
                     @Override
                     public void run() {
