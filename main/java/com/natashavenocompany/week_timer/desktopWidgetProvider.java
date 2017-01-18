@@ -18,6 +18,8 @@ import java.util.Date;
 /**
  * Created by natas on 16/12/14.
  */
+
+// 实现AppWidgetProvider，用来被系统小部件更新逻辑调度
 public class desktopWidgetProvider extends AppWidgetProvider {
     static String TAG = "FROM widgt";
     private RemoteViews mRemoteViews;
@@ -57,7 +59,7 @@ public class desktopWidgetProvider extends AppWidgetProvider {
         progressBarDay = progressBarDay > 0 ? progressBarDay > sum_day ? sum_day : progressBarDay : 0;
     }
 
-    // 确定RemoteViews样式
+    // 确定RemoteViews样式，小部件在桌面上的样式确定
     private void getRemoteViewsStyle(Context context, int widgetID) {
         int NON_ACTIVITY_STYLE = R.layout.widget_view_nonactivity;
         int ACTIVITY_STYLE = R.layout.widget_view_activity;
@@ -124,15 +126,14 @@ public class desktopWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    /**
-     * 每次窗口小部件被点击更新都调用一次该方法
-     */
+    // 小部件更新时执行这个部分
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
                          int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         Log.i(TAG, "onUpdate");
 
+        // 依次更新所有的小部件
         final int counter = appWidgetIds.length;
         Log.i(TAG, "counter = " + counter);
         for (int i = 0; i < counter; i++) {
@@ -141,6 +142,7 @@ public class desktopWidgetProvider extends AppWidgetProvider {
         }
     }
 
+    // 传进来一个appWidgetId，更新单个小部件
     public void onWidgetUpdate(Context context,
                                AppWidgetManager appWidgeManger, int appWidgetId) {
 
@@ -160,9 +162,10 @@ public class desktopWidgetProvider extends AppWidgetProvider {
         appWidgeManger.updateAppWidget(appWidgetId, mRemoteViews);
 
         // "窗口小部件"点击事件绑定
-//        Intent intentClick = new Intent(context, ConfigureActivity.class);
-        Intent intentClick = new Intent(context, WidgetDetailActivity.class);
+//        Intent intentClick = new Intent(context, ConfigureActivity.class);    // 点击显示配置页面
+        Intent intentClick = new Intent(context, WidgetDetailActivity.class);   // 点击展示详情页面
         intentClick.setAction(CLICK_ACTION);
+        // 把一些用到的变量存到Intent里面传递给配置activity
         intentClick.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         intentClick.putExtra("day_left", progressBarDay);
         intentClick.putExtra("isTimerStart", isTimerStart);
@@ -170,6 +173,6 @@ public class desktopWidgetProvider extends AppWidgetProvider {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intentClick, PendingIntent.FLAG_UPDATE_CURRENT);
         mRemoteViews.setOnClickPendingIntent(R.id.progressbar, pendingIntent);
         mRemoteViews.setOnClickPendingIntent(R.id.txt_center, pendingIntent);
-        appWidgetManager.updateAppWidget(appWidgetId, mRemoteViews);
+        appWidgetManager.updateAppWidget(appWidgetId, mRemoteViews);    // 更新小部件视图
     }
 }
