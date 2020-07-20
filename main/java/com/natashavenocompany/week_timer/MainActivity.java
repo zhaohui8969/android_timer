@@ -1,5 +1,6 @@
 package com.natashavenocompany.week_timer;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -73,14 +74,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button toview_set_view = (Button)findViewById(R.id.toview_set_view);
-        toview_set_view.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, WidgetDetailActivity.class);
-                startActivity(intent);
-            }
-        });
+//        Button toview_set_view = (Button)findViewById(R.id.toview_set_view);
+//        toview_set_view.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Intent intent = new Intent(context, WidgetDetailActivity.class);
+////                startActivity(intent);
+//                Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
+//                pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetID);
+//                startActivityForResult(pickIntent, KEY_CODE);
+//            }
+//        });
     }
 
     @Override

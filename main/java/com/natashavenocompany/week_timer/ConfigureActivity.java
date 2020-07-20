@@ -1,17 +1,17 @@
 package com.natashavenocompany.week_timer;
 
+import android.app.DatePickerDialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
-import android.app.DatePickerDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.CheckBox;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +36,8 @@ public class ConfigureActivity extends AppCompatActivity {
     CheckBox bool_show_title;
     TextView msg_sum;
     Button btn_ok;
+    Button btn_prev_month;
+    Button btn_next_month;
     int sum_day;
     private int mAppWidgetId;
     private Context context;
@@ -49,16 +51,46 @@ public class ConfigureActivity extends AppCompatActivity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        String datestring = year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
+                        String dateString = year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
                         date.setYear(year);
                         date.setMonth(monthOfYear);
                         date.setDate(dayOfMonth);
-                        changeTextView.setText(datestring);
+                        changeTextView.setText(dateString);
                         updateSumDays();
-                        Log.i("DatePicker", datestring);
+                        Log.i("DatePicker", dateString);
                     }
                 },
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    /**
+     * @param date               当前时间对象
+     * @param changeTextView     显示时间的控件
+     * @param month_next_or_prev 1:next month; -1:prev month
+     */
+    // 日期增加、减少一个月
+    public void prev_or_next_month(final Date date, final TextView changeTextView, int month_next_or_prev) {
+        Log.i("DatePicker", "prev_or_next_month");
+        int dayOfMonth = date.getDate();
+        int monthOfYear = date.getMonth();
+        int year = date.getYear() + 1900;
+        if (month_next_or_prev == 1) {
+            monthOfYear += 1;
+            if (monthOfYear > 11) {
+                monthOfYear = monthOfYear - 12;
+                year += 1;
+            }
+        } else {
+            monthOfYear -= 1;
+            if (monthOfYear < 0) {
+                monthOfYear = monthOfYear + 12;
+                year -= 1;
+            }
+        }
+        String dateString = year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
+        changeTextView.setText(dateString);
+        updateSumDays();
+        Log.i("DatePicker", dateString);
     }
 
     // 更新总天数计算
@@ -84,7 +116,7 @@ public class ConfigureActivity extends AppCompatActivity {
         bool_show_title.setChecked(jsonObject.optBoolean("bool_show_title"));
         // 读取颜色配置
         String color_str = jsonObject.optString("txt_color_str", "nonset");
-        if (color_str.equals("nonset")){    // 初始设置，读取默认值（上次使用的值）
+        if (color_str.equals("nonset")) {    // 初始设置，读取默认值（上次使用的值）
             Configure_util configure_util_color_set = new Configure_util(context, "COLOR_SET");
             JSONObject jsonObject_load_color_set = configure_util_color_set.loads_json("COLOR_SET", false);
             color_str = jsonObject_load_color_set.optString("last_default_color", "#FFFFF0");
@@ -101,10 +133,12 @@ public class ConfigureActivity extends AppCompatActivity {
         txt_start_time = (TextView) findViewById(R.id.txt_start_time);
         txt_end_time = (TextView) findViewById(R.id.txt_end_time);
         txt_title = (TextView) findViewById(R.id.txt_title);
-        txt_content =(TextView) findViewById(R.id.txt_content);
+        txt_content = (TextView) findViewById(R.id.txt_content);
         txt_color_str = (TextView) findViewById(R.id.txt_color_str);
         bool_show_title = (CheckBox) findViewById(R.id.bool_show_title);
         btn_ok = (Button) findViewById(R.id.btn_ok);
+        btn_prev_month = (Button) findViewById(R.id.btn_prev_month);
+        btn_next_month = (Button) findViewById(R.id.btn_next_month);
 
         // 从Intent中获取到当前配置的小部件ID
         final Intent intent = getIntent();
@@ -138,6 +172,28 @@ public class ConfigureActivity extends AppCompatActivity {
             public void onClick(View v) {
                 end_date = new Date(Date.parse((String) txt_end_time.getText()));
                 showDatePickerDialog(ConfigureActivity.this, end_date, txt_end_time);
+            }
+        });
+
+        // 前一个月按钮
+        btn_prev_month.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                start_date = new Date(Date.parse((String) txt_start_time.getText()));
+                end_date = new Date(Date.parse((String) txt_end_time.getText()));
+                prev_or_next_month(start_date, txt_start_time, -1);
+                prev_or_next_month(end_date, txt_end_time, -1);
+            }
+        });
+
+        // 后一个月
+        btn_next_month.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                start_date = new Date(Date.parse((String) txt_start_time.getText()));
+                end_date = new Date(Date.parse((String) txt_end_time.getText()));
+                prev_or_next_month(start_date, txt_start_time, 1);
+                prev_or_next_month(end_date, txt_end_time, 1);
             }
         });
 
