@@ -60,6 +60,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="标题"
+        android:textColor="@android:color/white"
         android:gravity="center"
         android:layout_weight="0.2" />
 </LinearLayout>
